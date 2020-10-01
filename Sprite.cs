@@ -13,11 +13,24 @@ namespace MyMonoGame.Sprites
     {
         protected Texture2D _texture;
 
+        public Vector2 Origin;
         public Vector2 Position;
         public Vector2 Velocity;
-        public float Speed;
+        protected float _rotation;
+
+        public float RotationVelocity = 3f;
+        public float LinearVelocity = 4f;
+
         public Input Input;
         public bool IsRemoved = false;
+
+        protected KeyboardState _currentKey;
+        protected KeyboardState _previousKey;
+
+        public Sprite(Texture2D texture)
+        {
+            _texture = texture;
+        }
 
         public Rectangle Rectangle
         {
@@ -27,9 +40,23 @@ namespace MyMonoGame.Sprites
             }
         }
 
-        public Sprite(Texture2D texture)
+        public float Rotation
         {
-            _texture = texture;
+            get { return _rotation; }
+            set
+            {
+                _rotation = value;
+            }
+        }
+
+        public Matrix Trasnform
+        {
+            get
+            {
+                return Matrix.CreateTranslation(new Vector3(-Origin, 0)) *
+                    Matrix.CreateRotationZ(_rotation) *
+                    Matrix.CreateTranslation(new Vector3(Position, 0));
+            }
         }
 
         public virtual void Update(GameTime gameTime, List<Sprite> sprites)
@@ -39,7 +66,10 @@ namespace MyMonoGame.Sprites
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, Position, Color.White);
+            if (_texture != null)
+            {
+                spriteBatch.Draw(_texture, Position, null, Color.White, _rotation, Origin, 1, SpriteEffects.None, 0);
+            }
         }
     }
 }

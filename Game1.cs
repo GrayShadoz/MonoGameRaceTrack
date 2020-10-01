@@ -28,8 +28,13 @@ namespace MyMonoGame
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+            this.Window.AllowUserResizing = false;
+            this.Window.Title = "Top Down Racing!";
+
             ScreenWidth = graphics.PreferredBackBufferWidth;
             ScreenHeight = graphics.PreferredBackBufferHeight;
+            graphics.IsFullScreen = false;
+            graphics.ApplyChanges();
         }
 
         protected override void Initialize()
@@ -43,27 +48,19 @@ namespace MyMonoGame
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var playerTexture = Content.Load<Texture2D>("Car_Up");
+            //var playerTexture = Content.Load<Texture2D>("");
+            var carTexture = Content.Load<Texture2D>("Car_Right");
 
             _sprites = new List<Sprite>()
             {
-                new Player(playerTexture)
+                //new Sprite(Content.Load<Texture2D>("Background")),
+                new Car(carTexture)
                 {
-                Position = new Vector2((ScreenWidth / 2) - (playerTexture.Width / 2), ScreenHeight - playerTexture.Height),
-                Input = new Input()
-                {
-                    Up = Keys.W,
-                    Down = Keys.S,
-                    Left = Keys.A,
-                    Right = Keys.D,
-                },
-                Speed = 10f,
+                    Position = new Vector2(100, 100),
+                    Origin = new Vector2(carTexture.Width / 2, carTexture.Height / 2),
                 }
             };
-
-                _hasStarted = false;
-        
-            }
+        }
 
         protected override void Update(GameTime gameTime)
         {

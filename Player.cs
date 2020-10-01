@@ -27,7 +27,7 @@ namespace MyMonoGame.Sprites
 
             foreach (var sprite in sprites)
             {
-                if (sprite == this)
+                if (sprite is Player)
                     continue;
 
                 if (sprite.Rectangle.Intersects(this.Rectangle))
