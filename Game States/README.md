@@ -1,4 +1,4 @@
-Welcome!
+
 [Complete] State.cs - Part 1
 
 [Complete] MenuState - Part 2
